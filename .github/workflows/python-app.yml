@@ -1,0 +1,39 @@
+name: Python application
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5 # v5 daha günceldir
+      with:
+        python-version: "3.10"
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8
+        # Flask kurulumu burada otomatik yapılacak
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
+    - name: Lint with flake8
+      run: |
+        # Sözdizimi hatalarını (syntax) kontrol eder
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Karmaşıklık kontrolü yapar
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    # Not: Şu an manuel test yazmadığımız için pytest adımını 
+    # hata vermemesi adına şimdilik pasif bırakabilir veya silebilirsin.
