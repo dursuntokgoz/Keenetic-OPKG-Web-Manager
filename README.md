@@ -7,64 +7,78 @@
 
 ## 🇹🇷 Türkçe Açıklama
 
-Bu proje, Keenetic cihazlar üzerindeki Entware (OPKG) paketlerini bir web arayüzü üzerinden yönetmenizi sağlar. SSH terminaline girmeden paketleri arayabilir, yükleyebilir ve kaldırabilirsiniz.
+Bu proje, Keenetic cihazlar üzerindeki Entware (OPKG) paketlerini bir web arayüzü üzerinden yönetmenizi sağlar.
 
 ### ✨ Özellikler
-* **Canlı Liste:** Doğrudan `opkg list` komutuyla güncel repo listesini çeker.
-* **Durum Kontrolü:** Hangi paketlerin yüklü olduğunu otomatik tespit eder.
-* **Tek Tıkla İşlem:** Kolayca paket yükleme ve silme.
-* **Entegre Terminal:** İşlem çıktılarını anlık olarak arayüzden takip edin.
-* **Hafif:** Keenetic Titan ve benzeri cihazlar için optimize edilmiştir.
+* **Canlı Liste:** `opkg list` ile güncel repo verileri.
+* **Durum Kontrolü:** Yüklü paketleri otomatik tespit eder (YÜKLÜ/DEPO).
+* **Tek Tıkla İşlem:** Paket yükleme ve kaldırma.
+* **Entegre Terminal:** İşlem çıktılarını anlık izleme.
 
-### 🛠 Kurulum
+### 🛠 Kurulum ve Otomatik Başlatma
 1.  **Gereksinimler:**
     ```bash
     opkg update
     opkg install python3 python3-pip
     pip install flask
     ```
-2.  **Dosyaları Kopyalayın:** Proje dosyalarını `/opt/etc/my_manager` klasörüne yerleştirin.
-3.  **Çalıştırın:**
+2.  **Dosya Yapısı:**
+    Dosyaları `/opt/etc/my_manager/` altına kopyalayın. `templates/index.html` dosyasının doğru yerde olduğundan emin olun.
+3.  **Otomatik Başlatma Ayarı (Servis):**
+    Cihaz her açıldığında uygulamanın başlaması için şu komutları çalıştırın:
     ```bash
-    python3 app.py
+    # Servis dosyasını oluşturun
+    nano /opt/etc/init.d/S99package_manager
     ```
-4.  **Erişim:** Tarayıcıdan `http://ROUTER_IP:5000` adresine gidin.
+    İçine servis betiğini yapıştırın ve kaydedin. Ardından izinleri verin:
+    ```bash
+    chmod +x /opt/etc/init.d/S99package_manager
+    # Servisi hemen başlatın
+    /opt/etc/init.d/S99package_manager start
+    ```
 
 ---
 
 ## 🇺🇸 English Description
 
-This project allows you to manage Entware (OPKG) packages on Keenetic devices via a web interface. You can search, install, and uninstall packages without using the SSH terminal.
+Manage your Entware (OPKG) packages on Keenetic devices via a modern web interface.
 
 ### ✨ Features
-* **Live Listing:** Fetches the current repository list directly with the `opkg list` command.
-* **Status Check:** Automatically detects which packages are currently installed.
-* **One-Click Actions:** Easily install or remove packages.
-* **Integrated Terminal:** Monitor process outputs in real-time from the dashboard.
-* **Lightweight:** Optimized for Keenetic Titan and similar embedded devices.
+* **Live Listing:** Real-time data from `opkg list`.
+* **Status Check:** Automatically detects installed packages (INSTALLED/REPO).
+* **One-Click Actions:** Fast install and uninstall buttons.
+* **Integrated Terminal:** Real-time process logs on the dashboard.
 
-### 🛠 Installation
+### 🛠 Installation & Autostart
 1.  **Requirements:**
     ```bash
     opkg update
     opkg install python3 python3-pip
     pip install flask
     ```
-2.  **Copy Files:** Place the project files into the `/opt/etc/my_manager` directory.
-3.  **Run:**
+2.  **File Structure:**
+    Place files into `/opt/etc/my_manager/`. Ensure `templates/index.html` is in the correct sub-directory.
+3.  **Autostart Configuration (Service):**
+    To start the app automatically on boot, run the following commands:
     ```bash
-    python3 app.py
+    # Create the service file
+    nano /opt/etc/init.d/S99package_manager
     ```
-4.  **Access:** Open your browser and go to `http://ROUTER_IP:5000`.
+    Paste the service script, save it, and set permissions:
+    ```bash
+    chmod +x /opt/etc/init.d/S99package_manager
+    # Start the service immediately
+    /opt/etc/init.d/S99package_manager start
+    ```
 
 ---
 
 ## 📂 Project Structure / Proje Yapısı
 ```text
 /opt/etc/my_manager/
-├── app.py              # Backend logic (Python/Flask)
+├── app.py              # Backend (Python/Flask)
 ├── templates/
-│   └── index.html      # Modern UI (Tailwind CSS)
-├── init.d/
-│   └── S99package_manager # Autostart script
+│   └── index.html      # UI (Tailwind CSS)
 └── README.md           # Documentation
+/opt/etc/init.d/
+└── S99package_manager  # Service Script (Autostart)
