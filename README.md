@@ -5,6 +5,10 @@
 
 ---
 
+## 📸 Screenshot / Ekran Görüntüsü
+![Keenetic App Store Dashboard](screenshot.png)
+
+
 ## 🇹🇷 Türkçe Açıklama
 
 Bu proje, Keenetic cihazlar üzerindeki Entware (OPKG) paketlerini bir web arayüzü üzerinden yönetmenizi sağlar.
