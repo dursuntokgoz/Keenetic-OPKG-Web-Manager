@@ -9,6 +9,8 @@
 ![Keenetic App Store Dashboard](screenshot.png)
 
 
+Default URL / Varsayılan URL : http://192.168.1.1:5000
+
 ## 🇹🇷 Türkçe Açıklama
 
 Bu proje, Keenetic cihazlar üzerindeki Entware (OPKG) paketlerini bir web arayüzü üzerinden yönetmenizi sağlar.
