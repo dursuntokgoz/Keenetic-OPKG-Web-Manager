@@ -1,1 +1,8 @@
-flask
+# Keenetic Panel - Python Bağımlılıkları
+# Bu dosya 'pip install -r requirements.txt' komutu ile kurulabilir.
+
+Flask==3.0.0
+Werkzeug>=3.0.0
+# Not: Keenetic/Entware üzerinde bellek tasarrufu için 
+# standart kütüphaneler (os, subprocess, shutil) kullanılmıştır.
+# Ekstra ağır kütüphanelerden kaçınılmıştır.

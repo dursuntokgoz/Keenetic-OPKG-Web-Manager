@@ -1,0 +1,30 @@
+#!/bin/sh
+
+ENABLED=yes
+PROG=/opt/bin/python3
+ARGS="/opt/etc/KeeneticPackageManager/app.py"
+PREARGS=""
+DESC=$PROG
+PATH=/opt/bin:/opt/sbin:/bin:/sbin:/usr/bin:/usr/sbin
+
+. /opt/etc/init.d/rc.func
+
+case "$1" in
+    start)
+        echo "Starting Package Manager..."
+        $PROG $ARGS > /dev/null 2>&1 &
+        ;;
+    stop)
+        echo "Stopping Package Manager..."
+        killall python3
+        ;;
+    restart)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac

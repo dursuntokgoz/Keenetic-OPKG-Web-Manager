@@ -20,14 +20,15 @@
 Bu proje, Keenetic cihazlar üzerindeki Entware (OPKG) paketlerini modern bir web arayüzü üzerinden yönetmenizi sağlar.
 
 ### ✨ Özellikler
-* **Canlı Liste:** `opkg list` ile güncel repo verilerini çeker.
-* **Durum Kontrolü:** Paketlerin yüklü olup olmadığını otomatik tespit eder.
-* **Tek Tıkla İşlem:** Hızlı paket yükleme ve kaldırma butonları.
-* **Entegre Terminal:** İşlem çıktılarını anlık izleme.
+* **📦 Paket Yönetimi:** `opkg` paketlerini listeleyin, kurun veya kaldırın.
+* **📂 Dosya Yöneticisi:** `/opt` dizininde tam yetkili dosya işlemleri (Kopyala, Taşı, Düzenle).
+* **📊 Dashboard:** İşlemci (CPU), RAM ve Disk kullanımını anlık izleyin.
+* **⚙️ Servis Yönetimi:** `init.d` servislerini tek tıkla başlatın veya durdurun.
+* **🖥️ Web Terminal:** Komut satırı erişimi (Güvenlik filtreli).
 
 ### 🛠 Kurulum ve Otomatik Başlatma
-1. **Gereksinimler:** `opkg install python3 python3-pip && pip install flask`
-2. **Dosya Yapısı:** Dosyaları `/opt/etc/my_manager/` altına kopyalayın.
+1. **Gereksinimler:** `opkg install python3 python3-pip python3-light python3-flask procps-ng-ps coreutils-stat unzip && pip install flask`
+2. **Dosya Yapısı:** Dosyaları `/opt/etc/KeeneticPackageManager/` altına kopyalayın.
 3. **Servis Ayarı:** `/opt/etc/init.d/S99package_manager` dosyasını oluşturun ve aşağıdaki betiği yapıştırın.
 
 ---
@@ -44,7 +45,7 @@ This project allows you to manage Entware (OPKG) packages on Keenetic devices vi
 
 ### 🛠 Installation & Autostart
 1. **Requirements:** `opkg install python3 python3-pip && pip install flask`
-2. **File Structure:** Place files into `/opt/etc/my_manager/`.
+2. **File Structure:** Place files into `/opt/etc/KeeneticPackageManager/`.
 3. **Autostart:** Create `/opt/etc/init.d/S99package_manager` and use the script below.
 
 ---
@@ -55,9 +56,9 @@ This project allows you to manage Entware (OPKG) packages on Keenetic devices vi
 ```bash
 #!/bin/sh
 NAME="Keenetic_OPKG_Manager"
-PROG="/opt/etc/my_manager/app.py"
+PROG="/opt/etc/KeeneticPackageManager/app.py"
 PYTHON="/opt/bin/python3"
-LOG_FILE="/opt/etc/my_manager/manager.log"
+LOG_FILE="/opt/etc/KeeneticPackageManager/manager.log"
 
 case "$1" in
     start)

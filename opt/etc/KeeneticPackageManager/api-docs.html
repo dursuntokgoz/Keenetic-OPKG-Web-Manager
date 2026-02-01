@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Dokümantasyonu - Keenetic Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f9fafb;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4a5fc1 0%, #5d4e99 100%);
+            color: white;
+            padding: 30px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .btn-back {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: white;
+            color: #4a5fc1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .intro {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .intro h2 {
+            font-size: 24px;
+            color: #111827;
+            margin-bottom: 15px;
+        }
+
+        .intro p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            font-size: 20px;
+            color: #111827;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .endpoint {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #4a5fc1;
+        }
+
+        .endpoint:last-child {
+            margin-bottom: 0;
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .method {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .method-get {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .method-post {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .endpoint-url {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #111827;
+            font-weight: 600;
+        }
+
+        .endpoint-description {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .params {
+            margin-top: 15px;
+        }
+
+        .params h4 {
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .param-item {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .param-name {
+            font-family: 'Courier New', monospace;
+            color: #4a5fc1;
+            font-weight: 600;
+        }
+
+        .param-type {
+            color: #059669;
+            font-style: italic;
+            margin-left: 8px;
+        }
+
+        .param-desc {
+            color: #6b7280;
+            margin-left: 8px;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin-top: 12px;
+            line-height: 1.8;
+        }
+
+        .code-block .key {
+            color: #93c5fd;
+        }
+
+        .code-block .string {
+            color: #86efac;
+        }
+
+        .code-block .number {
+            color: #fcd34d;
+        }
+
+        .toc {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .toc h3 {
+            font-size: 18px;
+            color: #111827;
+            margin-bottom: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+        }
+
+        .toc a {
+            color: #4a5fc1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #3d4fa3;
+            text-decoration: underline;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toc {
+                position: static;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .badge-auth {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-new {
+            background: #d1fae5;
+            color: #065f46;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>📚 API Dokümantasyonu</h1>
+            <a href="/" class="btn-back">← Panele Dön</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Keenetic Panel REST API</h2>
+            <p>Bu dokümantasyon, Keenetic Sistem Yönetim Paneli'nin tüm API endpoint'lerini ve kullanım örneklerini içerir.</p>
+        </div>
+
+        <div class="grid">
+            <div class="toc">
+                <h3>İçindekiler</h3>
+                <ul>
+                    <li><a href="#system">📊 Sistem</a></li>
+                    <li><a href="#network">🌐 Ağ</a></li>
+                    <li><a href="#storage">💾 Depolama</a></li>
+                    <li><a href="#processes">⚙️ İşlemler</a></li>
+                    <li><a href="#services">🔌 Servisler</a></li>
+                    <li><a href="#packages">📦 Paketler</a></li>
+                    <li><a href="#files">📁 Dosya Yönetimi</a></li>
+                    <li><a href="#logs">📋 Loglar</a></li>
+                    <li><a href="#tools">🛠️ Araçlar</a></li>
+                </ul>
+            </div>
+
+            <div class="main-content">
+                <!-- Authentication -->
+                <!-- System -->
+                <div class="section" id="system">
+                    <h3>📊 Sistem Bilgileri</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/stats</span>
+                            
+                        </div>
+                        <div class="endpoint-description">CPU ve RAM kullanımı</div>
+                        <div class="code-block">
+{
+  <span class="key">"success"</span>: <span class="string">true</span>,
+  <span class="key">"cpu"</span>: <span class="number">15.3</span>,
+  <span class="key">"memory"</span>: {
+    <span class="key">"used"</span>: <span class="number">568.4</span>,
+    <span class="key">"total"</span>: <span class="number">991.3</span>,
+    <span class="key">"percent"</span>: <span class="number">57.3</span>
+  }
+}
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/system/info</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Sistem bilgileri (hostname, kernel, uptime, load)</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/system/reboot</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Sistemi 5 saniye sonra yeniden başlatır</div>
+                    </div>
+                </div>
+
+                <!-- Network -->
+                <div class="section" id="network">
+                    <h3>🌐 Ağ Yönetimi</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/network/interfaces</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Tüm ağ arayüzlerini listeler (MAC, IP, state)</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/network/wireless</span>
+                            
+                        </div>
+                        <div class="endpoint-description">WiFi arayüzleri ve sinyal bilgisi</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/network/restart</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Network servisini yeniden başlatır</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/bandwidth</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Interface bazlı bandwidth kullanımı (rx/tx bytes, packets)</div>
+                    </div>
+                </div>
+
+                <!-- Storage -->
+                <div class="section" id="storage">
+                    <h3>💾 Depolama</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/storage</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Disk kullanımı (df -h çıktısı)</div>
+                    </div>
+                </div>
+
+                <!-- Processes -->
+                <div class="section" id="processes">
+                    <h3>⚙️ İşlem Yönetimi</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/processes</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Çalışan tüm işlemleri listeler</div>
+                        <div class="code-block">
+{
+  <span class="key">"success"</span>: <span class="string">true</span>,
+  <span class="key">"processes"</span>: [
+    {
+      <span class="key">"pid"</span>: <span class="string">"1234"</span>,
+      <span class="key">"user"</span>: <span class="string">"root"</span>,
+      <span class="key">"cpu"</span>: <span class="string">"2.3"</span>,
+      <span class="key">"mem"</span>: <span class="string">"1.5"</span>,
+      <span class="key">"command"</span>: <span class="string">"/usr/sbin/nginx"</span>
+    }
+  ]
+}
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/processes/kill</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Belirtilen PID'yi sonlandırır</div>
+                        <div class="params">
+                            <h4>Request Body:</h4>
+                            <div class="param-item">
+                                <span class="param-name">pid</span>
+                                <span class="param-type">string</span>
+                                <span class="param-desc">- Process ID</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <div class="section" id="services">
+                    <h3>🔌 Servisler</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/services</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Çalışan TCP/UDP servislerini listeler (netstat -tulpn)</div>
+                    </div>
+                </div>
+
+                <!-- Packages -->
+                <div class="section" id="packages">
+                    <h3>📦 Paket Yönetimi</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/packages</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Tüm opkg paketlerini listeler</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/packages/install</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Paket yükler</div>
+                        <div class="params">
+                            <h4>Request Body:</h4>
+                            <div class="param-item">
+                                <span class="param-name">package</span>
+                                <span class="param-type">string</span>
+                                <span class="param-desc">- Paket adı</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/packages/remove</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Paket kaldırır</div>
+                    </div>
+                </div>
+
+                <!-- Files -->
+                <div class="section" id="files">
+                    <h3>📁 Dosya Yönetimi</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/files?path=/opt</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Klasör içeriğini listeler</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/read</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosya içeriğini okur</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/write</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosyaya yazar</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/create</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosya/klasör oluşturur</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/delete</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosya/klasör siler</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/rename</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosya/klasör yeniden adlandırır</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/copy</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosyaları clipboard'a kopyalar</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/paste</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Clipboard'dan yapıştırır</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/compress</span>
+                            
+                        </div>
+                        <div class="endpoint-description">ZIP oluşturur</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/extract</span>
+                            
+                        </div>
+                        <div class="endpoint-description">ZIP dosyasını çıkartır</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/files/upload</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosya yükler (multipart/form-data)</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/files/download?path=/opt/file.txt</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosya indirir</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/files/search?query=config&path=/opt</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosya arar</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/files/info?path=/opt/file.txt</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Dosya detayları</div>
+                    </div>
+                </div>
+
+                <!-- Logs -->
+                <div class="section" id="logs">
+                    <h3>📋 Log Yönetimi</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/logs/kernel?lines=50</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Kernel log (dmesg)</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/logs/system?lines=50</span>
+                            
+                        </div>
+                        <div class="endpoint-description">System log (logread/syslog)</div>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div class="section" id="tools">
+                    <h3>🛠️ Ağ Araçları</h3>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/ping</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Ping testi</div>
+                        <div class="params">
+                            <h4>Request Body:</h4>
+                            <div class="param-item">
+                                <span class="param-name">host</span>
+                                <span class="param-type">string</span>
+                                <span class="param-desc">- Hedef host</span>
+                            </div>
+                            <div class="param-item">
+                                <span class="param-name">count</span>
+                                <span class="param-type">number</span>
+                                <span class="param-desc">- Paket sayısı (default: 4)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/dns/check</span>
+                            
+                        </div>
+                        <div class="endpoint-description">DNS lookup (nslookup)</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/traceroute</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Traceroute</div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-post">POST</span>
+                            <span class="endpoint-url">/api/terminal</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Shell komut çalıştırır (tehlikeli komutlar engellenir)</div>
+                        <div class="params">
+                            <h4>Request Body:</h4>
+                            <div class="param-item">
+                                <span class="param-name">command</span>
+                                <span class="param-type">string</span>
+                                <span class="param-desc">- Çalıştırılacak komut</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="endpoint-header">
+                            <span class="method method-get">GET</span>
+                            <span class="endpoint-url">/api/firewall/rules</span>
+                            
+                        </div>
+                        <div class="endpoint-description">Firewall kuralları (iptables)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
